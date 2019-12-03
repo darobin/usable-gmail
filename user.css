@@ -1,0 +1,33 @@
+/*
+ * Make text legible for people over legal drinking age
+ */
+/* - lines of body text */
+.a3s, .g6 { font: 1rem/1.5 Arial, Helvetica, sans-serif; }
+/* - parts of the From indicator */
+h3.iw { font-size: inherit; }
+/* - recipients list */
+.hx .hb { font-size: 0.9rem; }
+/* - time stamp */
+.ig .g3, .hI .g3, .iv .g3 { font-size: 0.9rem; }
+
+/*
+ * Wrap text to within best practices
+ */
+.a3s, .g6 { max-width: 80ch; }
+
+/*
+ * Editing without squinting
+ */
+.Am, .LW-avf.Am {
+  font: 1rem/1.5 Arial,Helvetica,sans-serif;
+  max-width: 80ch;
+}
+
+/*
+ * Remove ugly clutter
+ */
+/* - big Compose button + add some margin back */
+.z0 { display: none; }
+.yJ.aji { margin-top: 80px; }
+/* - logo */
+img.gb_oa { display: none; }
