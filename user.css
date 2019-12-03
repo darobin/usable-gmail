@@ -33,3 +33,13 @@ h3.iw { font-size: inherit; }
 .gb_sc { display: none !important; }
 /* - hamburger */
 .gb_yc { display: none; }
+/* - support */
+.gb_we.gb_ue { display: none; }
+/* - apps */
+.gb_Rc { display: none; }
+/* - input method, because you don't have threads but Dvorak input was a must-have */
+.aBS.J-J5-Ji { display: none; }
+/* - powered by Google (we knew that?) */
+.aeU .mb, .aeU a { color: white; }
+/* - canned answers */
+.brb { display: none; }
