@@ -28,6 +28,6 @@ h3.iw { font-size: inherit; }
  */
 /* - big Compose button + add some margin back */
 .z0 { display: none; }
-.yJ.aji { margin-top: 80px; }
+.yJ { margin-top: 50px; }
 /* - logo */
-img.gb_oa { display: none; }
+.gb_sc { display: none !important; }
