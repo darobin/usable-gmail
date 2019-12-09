@@ -11,7 +11,7 @@ h3.iw { font-size: inherit; }
 .ig .g3, .hI .g3, .iv .g3 { font-size: 0.9rem; }
 
 /*
- * Wrap text to within best practices
+ * Wrap text to within best practices (this may break stuff)
  */
 .a3s, .g6 { max-width: 80ch; }
 
@@ -30,13 +30,13 @@ h3.iw { font-size: inherit; }
 .z0 { display: none; }
 .yJ { margin-top: 50px; }
 /* - logo */
-.gb_sc { display: none !important; }
+[src="https://ssl.gstatic.com/ui/v1/icons/mail/rfr/logo_gmail_lockup_default_1x.png"] { display: none !important; }
 /* - hamburger */
-.gb_yc { display: none; }
+[aria-label="Main menu"] { display: none; }
 /* - support */
-.gb_we.gb_ue { display: none; }
+#lZwQje { display: none; }
 /* - apps */
-.gb_Rc { display: none; }
+#gbwa { display: none; }
 /* - input method, because you don't have threads but Dvorak input was a must-have */
 .aBS.J-J5-Ji { display: none; }
 /* - powered by Google (we knew that?) */
