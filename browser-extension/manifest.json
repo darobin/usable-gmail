@@ -8,5 +8,12 @@
     "48": "icons/origami-48.png",
     "128": "icons/origami-128.png"
   },
-  "manifest_version": 2
+  "manifest_version": 2,
+  "permissions": [
+    "declarativeContent"
+  ],
+  "background": {
+    "scripts": ["bg.js"],
+    "persistent": false
+  }
 }
