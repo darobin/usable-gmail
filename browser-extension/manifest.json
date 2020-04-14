@@ -10,10 +10,15 @@
   },
   "manifest_version": 2,
   "permissions": [
-    "declarativeContent"
   ],
-  "background": {
-    "scripts": ["bg.js"],
-    "persistent": false
+  "content_scripts": {
+    "matches": [
+      "https://mail.google.com/*",
+      "https://*.mail.google.com/*"
+    ],
+    "scripts": ["content.js"],
+    "css": [
+      "usable-gmail.css"
+    ]
   }
 }
