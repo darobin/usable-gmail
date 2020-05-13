@@ -43,8 +43,16 @@ h3.iw { font-size: inherit !important; }
  * be the most important thing on the page.
  */
 /* - big Compose button + add some margin back */
-.z0 { display: none !important; }
-.yJ { margin-top: 50px !important; }
+/* .z0 { display: none !important; }
+.yJ { margin-top: 50px !important; } */
+/* in Mailplane we delete as above, but here we just make it a nicer size */
+.z0 {
+  display: inherit !important;
+  padding: 0 24px 0 8px !important;
+  zoom: 0.7 !important;
+  text-align: right !important;
+}
+
 
 /* - remove the logo */
 [src="https://ssl.gstatic.com/ui/v1/icons/mail/rfr/logo_gmail_lockup_default_1x.png"] { display: none !important; }
@@ -67,3 +75,7 @@ h3.iw { font-size: inherit !important; }
 
 /* - canned answers — this is email, not a chat system */
 .brb { display: none !important; }
+
+/* - if I want to use Meet, I know where to find it */
+.aeO.aeR { display: none !important; }
+.akc { display: none !important; }
