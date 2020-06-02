@@ -19,7 +19,8 @@
       ],
       "js": ["content.js"],
       "css": [
-        "usable-gmail.css"
+        "usable-gmail.css",
+        "usable-ui.css"
       ]
     }
   ]
