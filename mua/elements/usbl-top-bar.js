@@ -5,15 +5,13 @@ class UsableTopBarELement extends LitElement {
   static get styles () {
     return css`
       :host {
-        background: darkorange;
-        opacity: 0.2;
         grid-area: bar;
       }
     `;
   }
   render () {
     return html`
-      <span>top bar</span>
+      <usbl-logout-button></usbl-logout-button>
     `;
   }
 }
