@@ -1,0 +1,37 @@
+{
+  "name": "usable-gmail",
+  "version": "0.0.1",
+  "description": "Gmail, but usable",
+  "main": "client.js",
+  "scripts": {
+    "watch": "concurrently npm:watch-js npm:watch-server",
+    "watch-js": "npx rollup -c -w",
+    "watch-server": "http-server -p 7777 .",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/darobin/usable-gmail.git"
+  },
+  "author": "Robin Berjon <robin@berjon.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/darobin/usable-gmail/issues"
+  },
+  "homepage": "https://github.com/darobin/usable-gmail#readme",
+  "eslintConfig": {
+    "extends": "robin"
+  },
+  "devDependencies": {
+    "@rollup/plugin-node-resolve": "^7.1.3",
+    "concurrently": "^5.2.0",
+    "eslint-config-robin": "^6.2.0",
+    "http-server": "^0.12.3",
+    "rollup": "^2.18.0",
+    "rollup-plugin-terser": "^6.1.0"
+  },
+  "dependencies": {
+    "lit-element": "^2.3.1",
+    "lit-html": "^1.2.1"
+  }
+}
