@@ -20,7 +20,7 @@ class RBUsableELement extends LitElement {
         grid-template:
           "bar bar" 40px
           "mbx mlist" 1fr
-          "mbx msg" 2fr / 200px 1fr
+          "mbx msg" 2fr / 250px 1fr
         ;
         height: 100vh;
       }

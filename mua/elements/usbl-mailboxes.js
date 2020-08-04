@@ -26,7 +26,12 @@ class UsableMailboxesELement extends LitElement {
       a {
         text-decoration: none;
         color: #333;
-        display: block;
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+      }
+      .unread {
+        font-weight: bold;
       }
       .icon {
         display: inline-block;
@@ -34,15 +39,25 @@ class UsableMailboxesELement extends LitElement {
       }
       ul {
         list-style-type: none;
-        padding-left: 0.8rem;
+        padding-left: 0;
+      }
+      li {
+        padding: 0.2rem 0.8rem;
       }
     `;
   }
   render () {
     return html`
       <ul>
-        ${this.labels.map(({ id, name }) => html`
-          <li><a href=${`#${id}`}>${getIcon(id)} ${name}</a></li>
+        ${this.labels.map(({ id, name, messagesUnread: cnt }) => html`
+          <li>
+            <a href=${`#${id}`} class=${cnt ? 'unread' : 'read'}>
+              <span class="label">${getIcon(id)} ${name}</span>
+              ${cnt
+                ? html`<span class="count">${fmtCount(cnt)}</span>`
+                : ''}
+            </a>
+          </li>
         `)}
       </ul>
     `;
@@ -59,4 +74,10 @@ let icons = {
 };
 function getIcon (id) {
   return html`<span class="icon">${icons[id] || '📁'}</span>`;
+}
+
+function fmtCount (num) {
+  if (typeof num !== 'number' || num < 1000) return num;
+  if (num > 999999) return '∞';
+  return `${Math.floor(num / 1000)}k`;
 }
