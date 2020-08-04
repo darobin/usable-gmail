@@ -10,26 +10,17 @@ let userStore = writable(null, (set) => {
     auth2 = gapi.auth2.init({
       client_id: clientID,
       scope: 'profile https://mail.google.com/',
-      ux_mode: 'popup',
+      ux_mode: 'redirect',
     });
     auth2.isSignedIn.listen((signedIn) => {
       console.warn(`Signed-in? ${signedIn}`);
       if (!signedIn) auth2.signIn();
     });
-    auth2.currentUser.listen((user) => {
-      console.log(`User value: ${user}`, user);
-      set(user);
-    });
+    auth2.currentUser.listen((user) => set(user));
   });
 });
 userStore.logout = () => {
   if (!auth2) return;
-  // XXX: we migth not need to pay attention to the promise resolution here as the listener might
-  // do it already
-  auth2
-    .signOut()
-    .then(() => userStore.set(null))
-    .catch((err) => console.error(err))
-  ;
+  auth2.signOut();
 };
 registerStore('user', userStore);

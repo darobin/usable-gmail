@@ -16,7 +16,7 @@ export default [
     plugins: [
       resolve({ browser: true }),
       terser({ output: { comments: false } }),
-      !production && livereload(),
+      !production && livereload({ watch: './usable-gmail.min.js' }),
     ],
     watch: {
       clearScreen: false,

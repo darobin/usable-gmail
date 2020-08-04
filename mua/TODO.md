@@ -1,8 +1,6 @@
 
-* copy from anti
-  * stores
-  * basic element
-* index.html
-* top bar
-  * auth store
-  * log in / out buttons
+* list mailboxes
+* list messages
+  * show message tree
+  * navigate message tree
+* router for mailboxes
