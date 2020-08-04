@@ -11,19 +11,20 @@ class UsableMessagesELement extends LitElement {
   initialize () {
     super.initialize();
     this.messagesStore = getStore('gmail-messages');
-    this.messagesStore.subscribe((msgs) => this.messagesStore = msgs);
+    this.messagesStore.subscribe((msgs) => this.messages = msgs);
   }
   static get styles () {
     return css`
       :host {
         grid-area: mlist;
         border-bottom: 1px solid #e2e2e2;
+        overflow: auto;
       }
     `;
   }
   render () {
     return html`
-      <span>messages</span>
+      <pre>${JSON.stringify(this.messages, null, 2)}</pre>
     `;
   }
 }

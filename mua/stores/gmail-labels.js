@@ -1,5 +1,6 @@
 
 import { registerStore, getStore, derived } from '../lib/models';
+import errorCatcher from '../lib/error-catcher';
 
 let gmailLabelStore = derived(
   [getStore('gapi'), getStore('is-logged-in')],
@@ -7,14 +8,18 @@ let gmailLabelStore = derived(
     if (!gapi || !isLoggedIn) return set([]);
     gapi.client.gmail.users.labels.list({ userId: 'me' })
       .then((res) => {
-        let { labels } = res.result;
-        Promise.all(
-            labels
-              .filter(lb => lb.labelListVisibility !== 'labelHide' && lb.id !== 'UNREAD')
-              .map(({ id }) => gapi.client.gmail.users.labels.get({ userId: 'me', id }))
-          )
+        let { labels } = res.result
+          , batch = gapi.client.newBatch()
+        ;
+        labels
+          .filter(lb => lb.labelListVisibility !== 'labelHide' && lb.id !== 'UNREAD')
+          .forEach(({ id }) => {
+            batch.add(gapi.client.request({ path: `/gmail/v1/users/me/labels/${id}` }), { id });
+          })
+        ;
+        batch
           .then(labs => {
-            labs = labs
+            labs = Object.values(labs.result)
               .map(({ result }) => result)
               .sort((a, b) => {
                 if (a.type === 'system' && b.type !== 'system') return -1;
@@ -32,16 +37,10 @@ let gmailLabelStore = derived(
             ;
             set(labs || []);
           })
-          .catch((err) => {
-            console.error(err);
-            set([]);
-          })
+          .catch(errorCatcher(set, []))
         ;
       })
-      .catch((err) => {
-        console.error(err);
-        set([]);
-      })
+      .catch(errorCatcher(set, []))
     ;
   },
   []
