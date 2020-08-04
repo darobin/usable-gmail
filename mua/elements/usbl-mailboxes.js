@@ -11,9 +11,7 @@ class UsableMailboxesELement extends LitElement {
   initialize () {
     super.initialize();
     this.labelsStore = getStore('gmail-labels');
-    this.labelsStore.subscribe((labels) => {
-      this.labels = labels;
-    });
+    this.labelsStore.subscribe((labels) => this.labels = labels);
   }
   static get styles () {
     return css`
