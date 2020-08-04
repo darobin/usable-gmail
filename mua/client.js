@@ -1,4 +1,5 @@
 
+import './stores/gapi';
 import './stores/user';
 import './stores/is-logged-in';
 import './stores/gmail-labels';
