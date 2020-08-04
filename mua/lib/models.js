@@ -1,4 +1,4 @@
-/* eslint eqeqeq: 0, no-self-compare: 0 */
+/* eslint eqeqeq: 0, no-self-compare: 0, no-bitwise: 0 */
 // XXX: this is copied from anti on 2020-08-03
 
 let registry = {}
@@ -128,6 +128,38 @@ export function writable (value, start = () => {}) {
   return { set, update, subscribe };
 }
 
+// derived stores
+export function derived (stores, fn, initialValue) {
+    let single = !Array.isArray(stores)
+      , storesArray = single ? [stores] : stores
+      , auto = fn.length < 2
+    ;
+    return readable(initialValue, (set) => {
+        let inited = false
+          , values = []
+          , pending = 0
+          , cleanup = () => {}
+          , sync = () => {
+              if (pending) return;
+              cleanup();
+              let result = fn(single ? values[0] : values, set);
+              if (auto) set(result);
+              else cleanup = isFunction(result) ? result : () => {};
+            }
+          , unsubscribers = storesArray.map((store, i) => subMany(store, (value) => {
+              values[i] = value;
+              pending &= ~(1 << i);
+              if (inited) sync();
+            }, () => pending |= (1 << i)));
+        inited = true;
+        sync();
+        return function stop() {
+          runAll(unsubscribers);
+          cleanup();
+        };
+    });
+}
+
 // Reads a store once
 export function get (store) {
   if (!store) return;
@@ -143,4 +175,18 @@ function safeNotEqual (a, b) {
       (a && typeof a === 'object') ||
       typeof a === 'function'
     );
+}
+
+function runAll (fns) {
+  fns.forEach(fn => fn());
+}
+
+function isFunction (thing) {
+  return typeof thing === 'function';
+}
+
+function subMany (store, ...callbacks) {
+  if (store == null) return () => {};
+  let unsub = store.subscribe(...callbacks);
+  return unsub.unsubscribe ? () => unsub.unsubscribe() : unsub;
 }

@@ -10,10 +10,8 @@ class RBUsableELement extends LitElement {
   }
   initialize () {
     super.initialize();
-    this.userStore = getStore('user');
-    this.userStore.subscribe((user) => {
-      this.loggedIn = user && user.isSignedIn();
-    });
+    this.loggedInStore = getStore('is-logged-in');
+    this.loggedInStore.subscribe((isLoggedIn) => this.loggedIn = isLoggedIn);
   }
   static get styles () {
     return css`

@@ -1,5 +1,7 @@
 
 import './stores/user';
+import './stores/is-logged-in';
+import './stores/gmail-labels';
 
 import './elements/rb-usable';
 import './elements/usbl-top-bar';
