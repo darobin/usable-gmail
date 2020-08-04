@@ -20,13 +20,43 @@ class UsableMailboxesELement extends LitElement {
       :host {
         grid-area: mbx;
         overflow: auto;
+        font-family: franklin;
+        border-right: 1px solid #e2e2e2;
+      }
+      a {
+        text-decoration: none;
+        color: #333;
+        display: block;
+      }
+      .icon {
+        display: inline-block;
+        margin-right: 0.2rem;
+      }
+      ul {
+        list-style-type: none;
+        padding-left: 0.8rem;
       }
     `;
   }
   render () {
     return html`
-      <pre>${JSON.stringify(this.labels, null, 2)}</pre>
+      <ul>
+        ${this.labels.map(({ id, name }) => html`
+          <li><a href=${`#${id}`}>${getIcon(id)} ${name}</a></li>
+        `)}
+      </ul>
     `;
   }
 }
 customElements.define('usbl-mailboxes', UsableMailboxesELement);
+
+let icons = {
+  INBOX: '📥',
+  DRAFT: '📝',
+  SENT: '📤',
+  SPAM: '🥫',
+  TRASH: '🗑',
+};
+function getIcon (id) {
+  return html`<span class="icon">${icons[id] || '📁'}</span>`;
+}

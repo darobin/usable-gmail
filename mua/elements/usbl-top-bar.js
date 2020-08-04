@@ -34,14 +34,25 @@ class UsableTopBarELement extends LitElement {
         display: flex;
         justify-content: space-between;
         padding: 2px;
+        border-bottom: 1px solid #e2e2e2;
       }
       .logo-name {
-        font-family: karnak-cond-normal-700;
-        color: var(--highlight);
-        font-size: 1.5rem;
+        display: flex;
       }
       .logo-name > img {
-        vertical-align: text-bottom;
+        margin: 5px 0 5px 5px;
+        height: 30px;
+      }
+      .logo-name > .name {
+        border-left: 1px solid hotpink;
+        line-height: 0.6;
+        display: inline-block;
+        padding: 6px 3px 3px 3px;
+        font-family: karnak-normal-700, karnak-cond-normal-700;
+        color: var(--highlight);
+        font-size: 1.5rem;
+        height: 16px;
+        margin-top: 7px;
       }
       .user-bar > img {
         vertical-align: middle;
