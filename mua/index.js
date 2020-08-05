@@ -4,7 +4,7 @@ let express = require('express')
   , compression = require('compression')
   , { google } = require('googleapis')
   , axios = require('axios')
-  , nanoid = require('nanoid')
+  , { nanoid } = require('nanoid')
   , app = express()
   , clientID = '564300876279-vduinvjp384lvuusnhtfbgjut1ker4fa.apps.googleusercontent.com'
   , auth = new google.auth.OAuth2(clientID)
@@ -45,7 +45,10 @@ function hasTokens (req, res, next) {
 app.get('/api/mailboxes', hasTokens, (req, res) => {
   get('labels', (err, { labels } = {}) => {
     let b = new Batch(batchPath);
-    labels.forEach(({ id }) => b.get(id, `/gmail/v1/users/me/labels/${id}`));
+    labels
+      .filter(lb => lb.labelListVisibility !== 'labelHide' && lb.id !== 'UNREAD')
+      .forEach(({ id }) => b.get(id, `/gmail/v1/users/me/labels/${id}`))
+    ;
     b.run((err, data) => {
       if (err) return sendError(res, err);
       res.json({ ok: true, data: Object.values(data) });
