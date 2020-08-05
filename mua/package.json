@@ -9,6 +9,16 @@
     "watch-server": "nodemon index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "nodemonConfig": {
+    "ignore": [
+      "elements/*",
+      "lib/*",
+      "public/*",
+      "stores/*",
+      "client.js",
+      "rollup.config.js"
+    ]
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/darobin/usable-gmail.git"
@@ -34,11 +44,14 @@
   },
   "dependencies": {
     "@popeindustries/lit-html-server": "^3.1.0",
+    "axios": "^0.19.2",
     "compression": "^1.7.4",
     "express": "^4.17.1",
+    "google-auth-library": "^6.0.6",
     "googleapis": "^58.0.0",
     "lit-element": "^2.3.1",
     "lit-html": "^1.2.1",
+    "nanoid": "^3.1.12",
     "router5": "^8.0.1",
     "router5-plugin-browser": "^8.0.1"
   }
