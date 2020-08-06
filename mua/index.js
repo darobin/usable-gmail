@@ -89,6 +89,7 @@ gauth.auth((err, token, auth) => {
   console.warn(`Successfully authenticated with token.\n${JSON.stringify(token, null, 2)}`);
   setToken(token);
   oAuthClient = auth;
+  oAuthClient.on('tokens', setToken); // handles refresh tokens
   app.listen(7777, () => {
     console.warn(`Usable running: http://usable-gmail.berjon.com:7777/`);
   });

@@ -25,4 +25,23 @@ function get (path, cb) {
     .catch(cb)
   ;
 }
-module.exports = { options, setToken, get };
+
+function slurp (path, progress, cb) {
+  let results = []
+    , field = path.replace(/\?.*/, '')
+    , hasQS = /\?/.test(path)
+    , getPage = (pageToken) => {
+        let getPath = `${path}${hasQS ? '&' : '?'}${pageToken ? `pageToken=${pageToken}` : ''}`;
+        get(getPath, (err, data) => {
+          if (err) return cb(err);
+          results = results.concat(data[field]);
+          if (progress) progress({ added: data[field].length, total: results.length });
+          if (data.nextPageToken) return getPage(data.nextPageToken);
+          cb(null, results);
+        });
+      }
+  ;
+  getPage();
+}
+
+module.exports = { options, setToken, get, slurp };

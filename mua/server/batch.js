@@ -2,13 +2,14 @@
 let { nanoid } = require('nanoid')
   , axios = require('axios')
   , { options } = require('./http-api')
+  , maxInBatch = 100
 ;
 
 module.exports = class Batch {
-  constructor (batchEndpoint) {
-    this.sep = nanoid();
-    this.parts = [];
+  constructor (batchEndpoint, sep, parts) {
     this.batchPath = batchEndpoint;
+    this.sep = sep || nanoid();
+    this.parts = parts || [];
   }
   get (id, path) {
     this.add(id, 'GET', path);
@@ -28,7 +29,19 @@ ${method} ${path}
   body () {
     return this.parts.join('') + `--${this.sep}--\n`;
   }
+  runSplintered (cb) {
+    let batches = [];
+    while (this.parts.length > maxInBatch) {
+      batches.push(this.parts.slice(0, maxInBatch));
+      this.parts = this.parts.slice(maxInBatch);
+    }
+    batches.push(this.parts);
+    // XXX:
+    //  process them in turn, collate, and return that
+  }
   run (cb) {
+    // we want to make sure that each batch is no bigger than a maximum size
+    if (this.parts.length > maxInBatch) return this.runSplintered(cb);
     let body = this.body();
     axios.post(
         `https://www.googleapis.com/${this.batchPath}`,
