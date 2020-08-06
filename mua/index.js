@@ -18,6 +18,13 @@ let express = require('express')
     }
 ;
 
+app.use((req, res, next) => {
+  if (req.connection.remoteAddress !== '::ffff:127.0.0.1') {
+    return sendError(res, new Error('Only local connections are accepted.'));
+  }
+  next();
+});
+
 app.use(compression());
 
 // here is the API
@@ -52,6 +59,46 @@ app.get('/api/mailboxes', hasTokens, (req, res) => {
     b.run((err, data) => {
       if (err) return sendError(res, err);
       res.json({ ok: true, data: Object.values(data) });
+    });
+  });
+});
+
+app.get('/api/messages/:mailbox', hasTokens, (req, res) => {
+  let mbx = req.params.mailbox
+    , maxMessages = 100
+  ;
+  if (!/^\w+$/.test(mbx)) return sendError(res, new Error(`Wrong format: ${mbx}`));
+  get(`messages?maxResults=${maxMessages}&labelIds=${mbx}`, (err, { messages }) => {
+    if (err) return sendError(res, err);
+    let b = new Batch(batchPath);
+    messages.forEach(({ id }) => {
+      // if (idx) return;
+      b.get(
+        id,
+        `/gmail/v1/users/me/messages/${id}?fields=id,threadId,snippet,internalDate,payload/partId,payload/mimeType,payload/filename,payload/headers`
+      );
+    });
+    // XXX: this is exceeding batches, I wonder what else we could do...
+    b.run((err, data) => {
+      if (err) return sendError(res, err);
+      console.log(data);
+      let msgs = Object.values(data)
+        , threads = {}
+      ;
+      msgs.forEach(m => {
+        if (!threads[m.threadId]) threads[m.threadId] = { messages: [] };
+        threads[m.threadId].messages.push(msgs);
+      });
+      Object.keys(threads)
+        .forEach(tid => {
+          let th = threads[tid];
+          th.messages = th.messages.sort(dateSort);
+          th.internalDate = th.messages[th.messages.length - 1].internalDate;
+          th.subject = getHeader(th.messages[0], 'Subject');
+          th.from = getHeader(th.messages[0], 'From');
+        })
+      ;
+      res.json({ ok: true, data: Object.values(threads).sort(dateSort) });
     });
   });
 });
@@ -134,4 +181,18 @@ ${method} ${path}
       .catch(cb)
     ;
   }
+}
+
+function dateSort (a, b) {
+  if (a.internalDate < b.internalDate) return -1;
+  if (a.internalDate > b.internalDate) return 1;
+  return 0;
+}
+
+function getHeader (msg, header = '') {
+  let headers = (msg.payload || {}).headers || []
+    , obj = headers.find(h => h.name.toLowerCase() === header.toLowerCase())
+  ;
+  if (!obj) return;
+  return obj.value;
 }

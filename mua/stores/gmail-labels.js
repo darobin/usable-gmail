@@ -9,7 +9,6 @@ let gmailLabelStore = derived(
     if (!isLoggedIn) return set([]);
     get('mailboxes', (err, labels) => {
       if (err) errorCatcher(set, [])(err);
-      console.log(labels.data);
       labels = labels.data
         .sort((a, b) => {
           if (a.type === 'system' && b.type !== 'system') return -1;
@@ -19,7 +18,6 @@ let gmailLabelStore = derived(
           return a.name.localeCompare(b.name);
         })
         .map(lb => {
-          console.log(lb);
           if (lb.type !== 'system') return lb;
           return (
             { ...lb, name: lb.name.charAt(0).toUpperCase() + lb.name.slice(1).toLowerCase() }
