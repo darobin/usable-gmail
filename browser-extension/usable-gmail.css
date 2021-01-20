@@ -7,31 +7,25 @@
 
 
 /*
- * Make text legible for people over legal drinking age. You apparently can't change that without
- * making other parts of the UI humongous.
+ * Make text legible for people over legal drinking age
  */
 /* - lines of body text */
 .a3s, .g6 { font: 1rem/1.5 Arial, Helvetica, sans-serif !important; }
 .gmail-mp4p { font-size: inherit !important; }
-
 /* - parts of the From indicator */
 h3.iw { font-size: inherit !important; }
-
 /* - recipients list */
 .hx .hb { font-size: 0.9rem !important; }
-
 /* - time stamp */
 .ig .g3, .hI .g3, .iv .g3 { font-size: 0.9rem !important; }
 
 /*
- * Wrap text to within best practices. This just injects some basic respect for typography.
+ * Wrap text to within best practices (this may break stuff)
  */
 .a3s, .g6 { max-width: 80ch !important; }
 
 /*
- * Editing without squinting. You can actually make this text larger by changing the default, but
- * that changes the size of the text you send to everyone. This change improves things for those of
- * us who don't see "it looks fine on my machine" as the best in design.
+ * Editing without squinting
  */
 .Am, .LW-avf.Am {
   font: 1rem/1.5 Arial,Helvetica,sans-serif !important;
@@ -39,43 +33,27 @@ h3.iw { font-size: inherit !important; }
 }
 
 /*
- * Remove ugly clutter. Email is a productivity tool, not a branding opportunity. The logo shouldn't
- * be the most important thing on the page.
+ * Remove ugly clutter
  */
 /* - big Compose button + add some margin back */
-/* .z0 { display: none !important; }
-.yJ { margin-top: 50px !important; } */
-/* in Mailplane we delete as above, but here we just make it a nicer size */
-.z0 {
-  display: inherit !important;
-  padding: 0 24px 0 8px !important;
-  zoom: 0.7 !important;
-  text-align: right !important;
-}
-
-
-/* - remove the logo */
-[src="https://ssl.gstatic.com/ui/v1/icons/mail/rfr/logo_gmail_lockup_default_1x.png"] { display: none !important; }
-
-/* - we don't need the hamburger */
+.z0 { display: none !important; }
+.yJ { margin-top: 50px !important; }
+/* - logo */
+[href="#inbox"][title="Gmail"] { display: none !important; }
+/* - hamburger */
 [aria-label="Main menu"] { display: none !important; }
-
-/* - we don't need support */
+/* - support */
 #lZwQje { display: none !important; }
-
-/* - we know where to find those other apps */
+/* - apps */
 #gbwa { display: none !important; }
-
-/* - input method, because you don't can't have threads or read the names of people who send you
-     email but Dvorak input was a high priority must-have */
+/* - input method, because you don't have threads but Dvorak input was a must-have */
 .aBS { display: none !important; }
-
 /* - powered by Google (we knew that?) */
 .aeU .mb, .aeU a { color: white !important; }
-
-/* - canned answers — this is email, not a chat system */
+/* - canned answers */
 .brb { display: none !important; }
-
 /* - if I want to use Meet, I know where to find it */
-.aeO.aeR { display: none !important; }
-.akc { display: none !important; }
+.n6,
+[data-tooltip="Meet"],
+[data-tooltip="My meetings"],
+[data-tooltip="New meeting"] { display: none !important; }
