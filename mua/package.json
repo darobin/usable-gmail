@@ -52,7 +52,7 @@
     "googleapis": "^58.0.0",
     "lit-element": "^2.3.1",
     "lit-html": "^1.2.1",
-    "nanoid": "^3.1.12",
+    "nanoid": "^3.1.31",
     "open": "^7.1.0",
     "pouchdb": "^7.2.2",
     "router5": "^8.0.1",
